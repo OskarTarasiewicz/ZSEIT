@@ -28,10 +28,17 @@ app.get('/api/create', async (req: any, res: any) => {
 
 app.get('/api/read', async (req: any, res: any) => {
     const title = req.query.title;
-    const row = await db.prepare('SELECT * FROM files WHERE title = ?').run(title);
+    const row = await db.prepare('SELECT * FROM files WHERE title = ?').get(title);
+    return res.status(200).send({
+        msg: row,
+    })
+});
+
+app.get('/api/all', async (req: any, res: any) => {
+    const row = db.prepare('SELECT * FROM files').all()
     return res.status(200).send({
         msg: row
-    })
+    });
 });
 
 app.get('/api/delete', async (req: any, res: any) => {
