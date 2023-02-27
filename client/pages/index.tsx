@@ -5,6 +5,7 @@ import axios from "axios";
 
 const Home: NextPage = () => {
     const [data, setData] = useState([]);
+    const [selected, setSelected] = useState();
 
     useEffect(() => {
         axios.get('http://localhost:3001/api/all', {
@@ -26,15 +27,15 @@ const Home: NextPage = () => {
         <Box bg={'gray.800'} width={'100vw'} height={'98vh'}>
             <Heading padding={'12'} textAlign={'center'} color={'white'}>(READ) - Podgląd plików</Heading>
             <Box padding={'32'} display={'flex'} flexDir={'column'} justifyContent={'center'}>
-                <Select variant={'filled'}>
+                <Select onChange={(e) => {return setSelected(e.target.value)}} variant={'filled'}>
                     <Suspense fallback={'Ładowanie...'}>
                         {data.map((value, i) => {
                             // @ts-ignore
-                            return (<option key={i} value={value.title}>{value.title}</option>);
+                            return (<option key={i} value={value.content}>{value.title}</option>);
                         })}
                     </Suspense>
                 </Select>
-                <Textarea variant={'filled'} marginTop={'24'} disabled/>
+                <Textarea variant={'filled'} marginTop={'24'} disabled value={selected}/>
             </Box>
         </Box>
     );
