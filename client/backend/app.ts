@@ -1,9 +1,11 @@
-import express from 'express';
-import cors from 'cors';
-import Database from 'better-sqlite3';
+// @ts-nocheck
+// @ts-ignore
+const express = require('express');
+const cors = require('cors');
+const Database = require('better-sqlite3');
 
 const app = express();
-const db = new Database('./database.db', { verbose: console.log });
+const db = new Database('./database.db', {verbose: console.log});
 
 app.use(
     cors({
@@ -12,6 +14,9 @@ app.use(
         origin: ['http://localhost:3000']
     })
 )
+
+db.exec("CREATE TABLE IF NOT EXISTS files('title' varchar, 'content' varchar);");
+console.log('Database created!')
 
 app.get('/api/create', async (req: any, res: any) => {
     const title = req.query.title;
@@ -43,5 +48,5 @@ app.get('/api/update', async (req: any, res: any) => {
 });
 
 app.listen(3001, () => {
-    console.log('ready');
+    console.log('Ready on port 3001');
 })
