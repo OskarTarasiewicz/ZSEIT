@@ -6,14 +6,49 @@ import {
     Text,
     Stack,
     Button,
-    Link,
-    Badge,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    PinInput,
+    PinInputField,
     useColorModeValue,
+    useDisclosure,
+    HStack,
+    ButtonGroup
 } from '@chakra-ui/react';
 
 export default function SocialProfileSimple() {
+    const { isOpen, onOpen, onClose } = useDisclosure()
     return (
         <Center py={6}>
+            <Modal onClose={onClose} isOpen={isOpen} isCentered>
+                <ModalOverlay />
+                <ModalContent bg={'orange.500'}>
+                    <ModalHeader color={'white'}>Wymanage potwierdzenie</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody justifyContent={'center'} textAlign={'center'}>
+                        <HStack marginX={'auto'} textAlign={'center'}>
+                            <PinInput size={'lg'}>
+                                <PinInputField color={'white'} fontWeight={'black'} />
+                                <PinInputField color={'white'} fontWeight={'black'} />
+                                <PinInputField color={'white'} fontWeight={'black'} />
+                                <PinInputField color={'white'} fontWeight={'black'} />
+                            </PinInput>
+                        </HStack>
+                    </ModalBody>
+                    <ModalFooter>
+                        <ButtonGroup>
+                            <Button onClick={onClose}>Anuluj</Button>
+                            <Button onClick={() => { alert('Wypłata') }}>Dalej</Button>
+                        </ButtonGroup>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+
             <Box
                 marginTop={'20vh'}
                 maxW={'320px'}
@@ -47,6 +82,7 @@ export default function SocialProfileSimple() {
                 </Text>
                 <Stack mt={8} direction={'row'} spacing={4}>
                     <Button
+                        onClick={onOpen}
                         flex={1}
                         fontSize={'sm'}
                         rounded={'full'}
@@ -56,6 +92,7 @@ export default function SocialProfileSimple() {
                         Wpłać
                     </Button>
                     <Button
+                        onClick={onOpen}
                         variant={'solid'}
                         flex={1}
                         fontSize={'sm'}
