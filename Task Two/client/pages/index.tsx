@@ -17,9 +17,29 @@ import {
   InputLeftElement,
   Textarea,
 } from '@chakra-ui/react';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { Meh, Mail, MapPin, GitBranch, Lock, User } from 'react-feather';
 
 export default function contact() {
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+
+  const router = useRouter();
+
+  const logIn = () => {
+    axios.get('http://localhost:3001/api/login', { withCredentials: true, params: { login: login, password: password } }).then(function (response) {
+      if (response.status === 200) {
+        router.push({
+          pathname: '/account',
+        });
+      }
+    }).catch(e => {
+      return alert(`❌ BŁĄD: ${e.response.data.msg}`)
+    })
+  };
+
   return (
     <Container height={'100vh'} bg={'white'} maxW="full" mt={0} centerContent overflow="hidden">
       <Flex marginTop={'10vh'}>
@@ -111,7 +131,7 @@ export default function contact() {
                             pointerEvents="none"
                             children={<User color='#000000' />}
                           />
-                          <Input type="text" size="md" />
+                          <Input onChange={(e) => {return setLogin(e.target.value)}} type="text" size="md" />
                         </InputGroup>
                       </FormControl>
                       <FormControl id="name">
@@ -121,10 +141,10 @@ export default function contact() {
                             pointerEvents="none"
                             children={<Lock color='#000000' />}
                           />
-                          <Input type="password" size="md" />
+                          <Input onChange={(e) => {return setPassword(e.target.value)}} type="password" size="md" />
                         </InputGroup>
                       </FormControl>
-                      <Button colorScheme={'orange'}>
+                      <Button onClick={() => {return logIn();}} colorScheme={'orange'}>
                         Zaloguj
                       </Button>
                     </VStack>
