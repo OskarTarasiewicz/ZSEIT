@@ -1,16 +1,15 @@
 // @ts-nocheck
-
-import express from 'express';
-import cors from 'cors';
-import Database from 'better-sqlite3';
-import cookieParser from 'cookie-parser';
+// @ts-ignore
+const express = require('express');
+const cors  = require('cors');
+const Database  = require('better-sqlite3');
+const cookieParser  = require('cookie-parser');
 
 const db = new Database('db.db');
 
 const app = express();
 
 app.use(cookieParser());
-app.use(express.cookieParser());
 app.use(
     cors({
         origin: ['http://localhost:3000'],
