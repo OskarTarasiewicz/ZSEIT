@@ -1,8 +1,8 @@
 public class Rectangle {
-    private Point point1;
-    private Point point2;
-    private Point point3;
-    private Point point4;
+    public Point point1;
+    public Point point2;
+    public Point point3;
+    public Point point4;
 
     public Rectangle(Point p1, Point p2, Point p3, Point p4) {
         point1 = p1;
